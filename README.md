@@ -32,3 +32,7 @@ PR status
 - This branch feat/phase1-dm contains the final Phase 1 changes and is ready for a final PR merge to main.
 - PR URL: https://github.com/mubasher100/leadgen/compare/main...feat/phase1-dm?expand=1
 - Admin UI: Added /admin/download for CSV export and /admin seed for populating test data
+
+### Final status
+- Phase 1 DM prototype complete and running. All patches are integrated on feat/phase1-dm and ready for final PR merge to main.
+- PR URL: https://github.com/mubasher100/leadgen/compare/main...feat/phase1-dm?expand=1
