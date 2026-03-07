@@ -3,8 +3,11 @@ import jwt from 'jsonwebtoken'
 const SECRET = process.env.ADMIN_JWT_SECRET || 'default_admin_secret' // replace in prod
 const EXPIRY = '2h'
 
-export function signAdminToken(payload: object) {
-  return jwt.sign(payload, SECRET, { expiresIn: EXPIRY })
+export function signAdminToken(payload: any) {
+  const base = payload || {}
+  const role = (base as any).role ? (base as any).role : 'admin'
+  const toSign = { ...base, role }
+  return jwt.sign(toSign, SECRET, { expiresIn: EXPIRY })
 }
 
 export function verifyAdminToken(token: string) {
