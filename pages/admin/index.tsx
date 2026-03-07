@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import AdminLeadTable from '../../components/AdminLeadTable'
 import LeadDetail from '../../components/LeadDetail'
+import LeadSummary from '../../components/LeadSummary'
 
 type LeadRow = any
 
@@ -56,6 +57,13 @@ const AdminDashboard: React.FC = () => {
 
   const paginated = filtered.slice((page - 1) * perPage, page * perPage)
   const totalPages = Math.max(1, Math.ceil(filtered.length / perPage))
+  // compute simple counts from leads (if available)
+  const counts = {
+    total: leads.length,
+    newLeads: leads.filter((l) => (l.status ?? 'New') === 'New').length,
+    contacted: leads.filter((l) => (l.status ?? 'New') === 'Contacted').length,
+    closed: leads.filter((l) => (l.status ?? 'New') === 'Closed').length,
+  }
   return (
     <div style={{ padding: 20 }}>
       <h1>Admin Dashboard</h1>
@@ -79,8 +87,8 @@ const AdminDashboard: React.FC = () => {
       {loading ? (
         <p>Loading leads...</p>
       ) : (
-        <div style={{ display: 'flex', gap: 16 }}>
-          <div style={{ width: '55%' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <div style={{ width: '55%' }}>
             <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 8 }}>
               <input placeholder="Search leads" value={query} onChange={(e) => setQuery(e.target.value)} />
               <select value={status} onChange={(e) => setStatus(e.target.value)}>
@@ -101,6 +109,7 @@ const AdminDashboard: React.FC = () => {
                 .then(() => window.location.reload())
             }} style={{ marginLeft: 8 }}>Seed sample leads</button>
             </div>
+            <LeadSummary total={counts.total} newLeads={counts.newLeads} contacted={counts.contacted} closed={counts.closed} />
             <AdminLeadTable leads={paginated} onLeadClick={setSelectedLead} />
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 8 }}>
               <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page <= 1}>Prev</button>
