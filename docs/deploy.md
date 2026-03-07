@@ -30,4 +30,8 @@ Notes
 - Ingestion cadence: Configure a cron/CI job to run scripts/ingestCadence.js on a schedule; ensure API keys are secured.
 - The Phase 2 plan doc is PHASE2.md; update as you implement.
 - Add a verification checklist for deployment (DNS, TLS, env vars, etc.).
+- Add admin export page (UI) and a dedicated download route under /admin/download.
+- Ingestion cadence: Configure a cron/CI job to run scripts/ingestCadence.js on a schedule; ensure API keys are secured.
+- The Phase 2 plan doc is PHASE2.md; update as you implement.
+- Add a verification checklist for deployment (DNS, TLS, env vars, etc.).
 - Ingestion cadence: Configure a cron/CI job to run scripts/ingestCadence.js on a schedule; ensure API keys are secured.

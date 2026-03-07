@@ -9,3 +9,4 @@ Phase 1 (Digital Marketing): Phase 1 patches for DM lead generation
 - Admin/auth: simple password guard (upgrade path noted)
 - Email: SendGrid/Mailgun integration plan (config via env vars)
 - CSV export: supported in Phase 1
+- Admin UI: Added /admin/download for CSV export and /admin seed for populating test data

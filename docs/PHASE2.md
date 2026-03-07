@@ -8,6 +8,18 @@ Phase 2 Plan (enrichment, more data sources, deeper analytics)
 - Security: implement OAuth/Supabase Auth for multi-user access, RBAC roles
 - Data governance: data retention policies, audit logs, and PII masking in non-admin contexts
 - Metrics: lead-to-Close rate, source ROI dashboards
+- Phase 2 Milestones:
+  - Milestone 1: Add 2–3 new licensed sources for discovery (Chamber of Commerce, local registries)
+  - Milestone 2: Implement a robust data enrichment pass (company domain, public profiles, basic contacts where consent is allowed)
+  - Milestone 3: Build admin analytics dashboards (by source, ROI, lead lifecycle metrics)
+  - Milestone 4: Implement proper RBAC with Supabase Auth
+  - Milestone 5: Add automated opt-in/out controls and data-retention features
+- Ingestion: implement robust cadence with parallel fetches and rate limiting; dedupe across sources
+- Admin: richer analytics, search, filters by source, and lifecycle automation
+- Outreach: track campaign linking, opt-in status, and consent handling
+- Security: implement OAuth/Supabase Auth for multi-user access, RBAC roles
+- Data governance: data retention policies, audit logs, and PII masking in non-admin contexts
+- Metrics: lead-to-Close rate, source ROI dashboards
 - Ingestion: implement robust cadence with parallel fetches and rate limiting; dedupe across sources
 - Admin: richer analytics, search, filters by source, and lifecycle automation
 - Outreach: track campaign linking, opt-in status, and consent handling

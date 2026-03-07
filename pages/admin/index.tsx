@@ -25,6 +25,8 @@ const AdminDashboard: React.FC = () => {
   const [status, setStatus] = useState('')
   const [source, setSource] = useState('')
   const [selectedLead, setSelectedLead] = useState<LeadRow | null>(null)
+  const [page, setPage] = useState(1)
+  const perPage = 20
 
   useEffect(() => {
     async function load() {
@@ -52,6 +54,8 @@ const AdminDashboard: React.FC = () => {
     return matchQ && matchS && matchSrc
   })
 
+  const paginated = filtered.slice((page - 1) * perPage, page * perPage)
+  const totalPages = Math.max(1, Math.ceil(filtered.length / perPage))
   return (
     <div style={{ padding: 20 }}>
       <h1>Admin Dashboard</h1>
@@ -90,9 +94,19 @@ const AdminDashboard: React.FC = () => {
                 <option value="Google Places">Google Places</option>
                 <option value="Yelp">Yelp</option>
               </select>
-              <Link href="/admin/export"><a>Export CSV</a></Link>
+            <Link href="/admin/export"><a>Export CSV</a></Link>
+            <button onClick={() => {
+              fetch('/api/leads/seed', { method: 'POST' })
+                .then(res => res.json())
+                .then(() => window.location.reload())
+            }} style={{ marginLeft: 8 }}>Seed sample leads</button>
             </div>
-            <AdminLeadTable leads={filtered} onLeadClick={setSelectedLead} />
+            <AdminLeadTable leads={paginated} onLeadClick={setSelectedLead} />
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 8 }}>
+              <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page <= 1}>Prev</button>
+              <span>Page {page} of {totalPages}</span>
+              <button onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page >= totalPages}>Next</button>
+            </div>
           </div>
           <div style={{ width: '45%', minHeight: 200, borderLeft: '1px solid #e5e7eb', paddingLeft: 16 }}>
             {selectedLead ? (
