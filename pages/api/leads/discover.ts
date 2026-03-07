@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import supabase from '../../lib/supabaseClient'
+import { enrichLead } from '../../ingestors/enrichment'
 
 type DiscoveryPayload = {
   name?: string
@@ -37,7 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   }
 
-  const leadPayload: any = {
+  let leadPayload: any = {
     // map discovery fields into core lead fields where possible
     first_name: payload.name?.split(' ')[0] ?? null,
     last_name: payload.name?.split(' ').slice(1).join(' ') ?? null,
@@ -52,6 +53,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     source_timestamp: payload.source_timestamp ? new Date(payload.source_timestamp).toISOString() : null,
     data: payload.data ?? null,
     notes: payload?.notes ?? null,
+  }
+
+  // Apply enrichment if available (Phase 2+)
+  leadPayload = enrichLead(leadPayload)
+
+  // Enrichment placeholder: enrich with optional enrichment data after create
+  if (leadPayload.data) {
+    leadPayload.data = { ...leadPayload.data, enrichment: { notes: 'phase2-enrichment-placeholder' } }
   }
 
   const { data, error } = await supabase.from('leads').insert([leadPayload]).select('id, status, created_at').single()

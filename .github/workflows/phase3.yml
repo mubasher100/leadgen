@@ -1,0 +1,25 @@
+name: Phase 3 CI
+
+on:
+  pull_request:
+    branches: [ main, phase2-all, finalize/phase1-all, finalize/phase1-final ]
+
+jobs:
+  phase3:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install
+        run: npm ci
+      - name: Install Playwright browsers
+        run: npx playwright install
+      - name: Run Phase 3 tests
+        env:
+          STAGING_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
+        run: |
+          npx playwright test tests/e2e/phase3auth.spec.ts tests/e2e/phase2full.spec.ts
