@@ -1,0 +1,22 @@
+Phase 2 Plan (enrichment, more data sources, deeper analytics)
+- Data sources:
+  - Add licensed enrichment providers (Clearbit Prospector, ZoomInfo) where compliant
+  - Expand to Chamber of Commerce, local business registries, and other verified sources
+- Ingestion: implement robust cadence with parallel fetches and rate limiting; dedupe across sources
+- Admin: richer analytics, search, filters by source, and lifecycle automation
+- Outreach: track campaign linking, opt-in status, and consent handling
+- Security: implement OAuth/Supabase Auth for multi-user access, RBAC roles
+- Data governance: data retention policies, audit logs, and PII masking in non-admin contexts
+- Metrics: lead-to-Close rate, source ROI dashboards
+- Ingestion: implement robust cadence with parallel fetches and rate limiting; dedupe across sources
+- Admin: richer analytics, search, filters by source, and lifecycle automation
+- Outreach: track campaign linking, opt-in status, and consent handling
+- Security: implement OAuth/Supabase Auth for multi-user access, RBAC roles
+- Data governance: data retention policies, audit logs, and PII masking in non-admin contexts
+- Metrics: lead-to-Close rate, source ROI dashboards
+- Ingestion: implement robust cadence with parallel fetches and rate limiting; dedupe across sources
+- Admin: richer analytics, search, filters by source, and lifecycle automation
+- Outreach: track campaign linking, opt-in status, and consent handling
+- Security: implement OAuth/Supabase Auth for multi-user access, RBAC roles
+- Data governance: data retention policies, audit logs, and PII masking in non-admin contexts
+- Metrics: lead-to-Close rate, source ROI dashboards

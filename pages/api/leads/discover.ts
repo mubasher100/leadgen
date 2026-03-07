@@ -28,6 +28,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ error: 'Invalid payload' })
   }
 
+  // Deduplication: if this discovery source and id already exists, return without creating
+  if (payload?.source_id) {
+    const { data: existing, error: derr } = await supabase.from('leads').select('id').eq('data_source', payload.data_source).eq('source_id', payload.source_id).limit(1).single()
+    if (existing?.id && !derr) {
+      res.status(200).json({ id: existing.id, status: 'exists' })
+      return
+    }
+  }
+
   const leadPayload: any = {
     // map discovery fields into core lead fields where possible
     first_name: payload.name?.split(' ')[0] ?? null,

@@ -11,10 +11,9 @@ type LeadRow = {
   source_timestamp?: string
   status?: string
 }
-
-const AdminLeadTable: React.FC<{ leads: LeadRow[] }> = ({ leads }) => {
+const AdminLeadTable: React.FC<{ leads: LeadRow[]; onLeadClick?: (lead: LeadRow) => void }> = ({ leads, onLeadClick }) => {
   return (
-    <table className="min-w-full divide-y divide-gray-200">
+    <table className="min-w-full divide-y divide-gray-200" style={{ cursor: onLeadClick ? 'pointer' : 'default' }}>
       <thead className="bg-gray-50">
         <tr>
           <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Lead</th>
@@ -28,8 +27,8 @@ const AdminLeadTable: React.FC<{ leads: LeadRow[] }> = ({ leads }) => {
       </thead>
       <tbody className="divide-y divide-gray-200">
         {leads.map((l) => (
-          <tr key={l.id}>
-            <td className="px-4 py-2">{l.name ?? 'Lead'}</td>
+          <tr key={l.id} onClick={() => onLeadClick?.(l)}>
+            <td className="px-4 py-2">{l.name ?? (l['first_name'] ?? '') + ' ' + (l['last_name'] ?? '')}</td>
             <td className="px-4 py-2">{l.email ?? '—'}</td>
             <td className="px-4 py-2">{l.company ?? '—'}</td>
             <td className="px-4 py-2">{`${l.city ?? ''} ${l.state ?? ''}`.trim() || '—'}</td>

@@ -1,13 +1,26 @@
-// Skeleton: Google Places ingestion scaffold (Phase 1)
-// This module will fetch businesses from Google Places API and normalize payloads
-// to the Leads schema. Ensure you have a licensed API key with proper terms of use.
-export async function fetchGooglePlaces(query: string, region: string): Promise<any[]> {
-  // Placeholder: replace with actual API calls and error handling
-  // Example:
-  // const API_KEY = process.env.GOOGLE_PLACES_API_KEY
-  // const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(query)}&region=${region}&key=${API_KEY}`
-  // const res = await fetch(url)
-  // const json = await res.json()
-  // return json.results ?? []
-  return []
+// Google Places ingestion (Phase 1)
+// This module fetches businesses from Google Places API and returns a normalized
+// list of results suitable for ingestion via /api/leads/discover.
+export async function fetchGooglePlaces(query: string, region: string, radiusMeters?: number): Promise<any[]> {
+  const apiKey = process.env.GOOGLE_PLACES_API_KEY
+  if (!apiKey) {
+    console.warn('GOOGLE_PLACES_API_KEY not configured')
+    return []
+  }
+  const r = radiusMeters ?? 50000
+  const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(
+    query
+  )}&region=${encodeURIComponent(region)}&radius=${r}&key=${apiKey}`
+  try {
+    const res = await fetch(url)
+    if (!res.ok) {
+      console.error('Google Places fetch error', res.status)
+      return []
+    }
+    const json = await res.json()
+    return json.results ?? []
+  } catch (e) {
+    console.error('Google Places fetch exception', e)
+    return []
+  }
 }
