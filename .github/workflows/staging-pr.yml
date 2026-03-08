@@ -1,0 +1,33 @@
+name: Staging Deploy & Tests (PR)
+
+on:
+  pull_request:
+    branches: [ main, feat/phase1-dm, finalize/phase1-all, finalize/phase1-final ]
+
+jobs:
+  staging:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright browsers
+        run: npx playwright install
+      - name: Deploy to staging (Verce-like placeholder)
+        env:
+          # Secrets to configure in repo settings
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          echo "[INFO] Deploy to staging would be triggered here with Vercel tokens. Configure via UI." 
+      - name: Run Playwright tests against staging
+        env:
+          STAGING_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
+        run: |
+          npx playwright test

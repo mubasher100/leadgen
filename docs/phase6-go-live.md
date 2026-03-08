@@ -1,0 +1,21 @@
+Phase 6 Go-Live Checklist (All-in-One Patch)
+
+- Summary: Go-live for Phase 6; ensure RBAC, enrichment, analytics, cadence, and bootstrap are production-ready.
+- Preflight:
+  - All Phase 6 code merged and dependencies installed
+  - Admin auth RBAC is configured (or ready to switch from token to Supabase Auth)
+  - License terms for enrichment providers are in place
+  - Staging tests pass: phase6full.spec.ts, phase6auth.spec.ts, phase6health.spec.ts
+- Production bootstrap:
+  - Run scripts/bootstrap-phase6-prod.sh to provision production environment
+  - Migrate production DB with latest scripts
+- Validation:
+  - Admin login works and RBAC gates protect admin routes
+  - Phase 6 enrichment can be triggered and persisted
+  - Phase 6 analytics load with data
+- Rollback:
+  - Use production rollback or disable new features via feature flags if needed
+- Monitoring:
+  - Ensure basic metrics (cadence throughput, enrichment success) are visible
+- Documentation:
+  - Update privacy/governance policies and onboarding docs
