@@ -1,0 +1,20 @@
+name: Phase 4 Compliance & Governance
+
+on:
+  pull_request:
+    branches: [ main, phase2-all, finalize/phase1-all, finalize/phase1-final, phase3-all ]
+
+jobs:
+  phase4:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install
+        run: npm ci
+      - name: Run Phase 4 Compliance Check
+        run: bash scripts/phase4-compliance-check.sh

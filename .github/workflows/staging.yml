@@ -1,0 +1,43 @@
+name: Staging Deploy & Playwright Tests
+
+on:
+  pull_request:
+    branches: [ main, feat/phase1-dm, finalize/phase1-all, finalize/phase1-final ]
+
+jobs:
+  staging-deploy-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright browsers
+        run: npx playwright install
+      - name: Install Verce CLI
+        run: npm i -g vercel
+      - name: Deploy to staging (via Vercel action)
+        id: vercel
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: --prod
+      - name: Set STAGING_BASE_URL
+        run: |
+          if [ -n "${{ steps.vercel.outputs.preview-url }}" ]; then
+            echo "STAGING_BASE_URL=${{ steps.vercel.outputs.preview-url }}" >> $GITHUB_ENV
+          else
+            echo "STAGING_BASE_URL=https://example-staging.vercel.app" >> $GITHUB_ENV
+          fi
+      - name: Run Playwright tests against staging
+        env:
+          STAGING_BASE_URL: https://$VERCEL_PROJECT_ID.vercel.app
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+        run: |
+          npx playwright test

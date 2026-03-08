@@ -1,10 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import supabase from '../../lib/supabaseClient'
+import { verifyAdminToken } from '../../lib/auth'
 import { sendLeadNotification } from '../../lib/email'
 
 function isAdmin(req: NextApiRequest): boolean {
   const cookie = (req.headers.cookie as string) ?? ''
-  return /(^|;\s*)admin_session\s*=\s*1(;|$)/.test(cookie)
+  const m = cookie.match(/admin_token=([^;]+);?/)
+  const token = m?.[1] || ''
+  const payload = verifyAdminToken(token)
+  return !!payload && payload?.role === 'admin'
 }
 function isAdmin(req: NextApiRequest): boolean {
   const cookie = req.headers.cookie ?? ''
