@@ -32,3 +32,8 @@ PR status
 - This branch feat/phase1-dm contains the final Phase 1 changes and is ready for a final PR merge to main.
 - PR URL: https://github.com/mubasher100/leadgen/compare/main...feat/phase1-dm?expand=1
 - Admin UI: Added /admin/download for CSV export and /admin seed for populating test data
+## Production Go-Live
+
+- Plan: Phase 6+ then Phase 7+ governance rollout. All in one PRs with staging previews.
+- Go-live steps are documented in docs/go-live-checklist.md and scripts/launch-production.sh.
+- Use the staging workflow to validate end-to-end tests before production deployment.
