@@ -1,0 +1,27 @@
+Phase 1 DM: Fully Running Admin, Cadence, and Deployment Plan
+
+Summary
+- This PR completes Phase 1 Digital Marketing workflow: fully wired admin dashboard, cadence ingestion, discovery ingestion, and export. Includes admin login, lead CRUD, seed utilities, and deployment docs. Phase 2 planning is included for enrichment and analytics.
+
+What’s included
+- Admin: login, protected /admin, live lead list, lead detail view, seed & export, logout
+- API: POST /api/leads, POST /api/leads/discover, GET /api/leads (admin), GET /api/leads/export, POST /api/leads/update, admin login/logout, /api/admin/logout
+- Ingestion Cadence: google_places_ingestor.ts and Yelp_ingestor.ts wired to fetch data (keys required) and cadence runner
+- DB: scripts/migrate-leads-phase1.sql
+- Frontend: LeadMultiStepForm.tsx (Phase 1 DM form), LeadDetail.tsx, AdminLeadTable.tsx, LeadSummary.tsx
+- Docs: docs/deploy.md, PHASE2.md, and a Phase 2 plan scaffold
+
+Testing plan (manual)
+1) Run app locally with env vars; verify admin login, lead form submission, and CSV export.
+2) Ensure cadence script runs (node scripts/ingestCadence.js) and posts to /api/leads/discover when keys exist.
+3) Seed sample data via /api/leads/seed and validate /admin shows seeds.
+
+Next steps
+- After review, merge to main and proceed with Phases 2 planning and production hardening.
+- I can follow with three patches for Admin UI depth, Cadence wiring, and Deployment bootstrap in a single PR if desired.
+
+### Testing environment and prerequisites
+- GOOGLE_PLACES_API_KEY, YELP_API_KEY, SENDGRID_API_KEY or MAILGUN_API_KEY
+- ADMIN_PASSWORD
+- NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY
+- ADMIN_EMAIL (optional)

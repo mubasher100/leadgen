@@ -1,0 +1,13 @@
+Phase 7 Governance (Phase 7-governance)
+- RBAC governance surface and policy controls for Phase 7
+- Goals:
+  - Define roles, permissions, and access paths for admin, enricher, and analytics features
+  - Ensure audit trails and data-access controls across Phase 7 endpoints
+  - Provide a go-live runbook for governance rollout and rollback
+- Key endpoints touched in Phase 7 governance:
+  - /api/phase7/governance (GET) – fetch governance status
+  - Optional: extend with /api/phase7/policy or RBAC policy endpoints in future
+- Next steps:
+  - Integrate real identity provider (e.g., Supabase Auth RBAC) and sync roles
+  - Add tests for RBAC guard rails across Phase 7 endpoints
+  - Document data-retention and opt-in/out in user-facing UI
