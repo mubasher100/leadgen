@@ -1,0 +1,10 @@
+{
+  "name": "leadgen-staging",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "echo 'skip build in staging'",
+    "test": "echo 'no tests'"
+  }
+}
