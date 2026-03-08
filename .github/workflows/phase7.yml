@@ -5,6 +5,12 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      run_type:
+        description: 'Type of run (staging/production)'
+        required: false
+        default: 'staging'
 
 jobs:
   build:
